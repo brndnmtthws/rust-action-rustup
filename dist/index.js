@@ -25,6 +25,7 @@ const tool_cache_1 = __nccwpck_require__(7784);
 const fs_1 = __nccwpck_require__(7147);
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const checkIfRustupExists = () => __awaiter(void 0, void 0, void 0, function* () {
+    (0, core_1.startGroup)('Checking for rustup');
     let output = '';
     const options = {
         listeners: {
@@ -39,6 +40,7 @@ const checkIfRustupExists = () => __awaiter(void 0, void 0, void 0, function* ()
     const result = yield (0, exec_1.exec)('rustup', ['show'], options);
     (0, core_1.debug)(output);
     (0, core_1.debug)(`result=${result}`);
+    (0, core_1.endGroup)();
 });
 const fetchRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;

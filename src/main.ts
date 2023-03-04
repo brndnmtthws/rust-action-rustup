@@ -5,6 +5,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 
 const checkIfRustupExists = async () => {
+  startGroup('Checking for rustup')
   let output = ''
   const options = {
     listeners: {
@@ -20,6 +21,7 @@ const checkIfRustupExists = async () => {
   const result = await exec('rustup', ['show'], options)
   debug(output)
   debug(`result=${result}`)
+  endGroup()
 }
 
 const fetchRustup = async () => {
