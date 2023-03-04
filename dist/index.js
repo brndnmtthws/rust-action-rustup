@@ -21,13 +21,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __nccwpck_require__(2186);
 const exec_1 = __nccwpck_require__(1514);
-const tool_cache_1 = __importDefault(__nccwpck_require__(7784));
+const tool_cache_1 = __nccwpck_require__(7784);
 const fs_1 = __nccwpck_require__(7147);
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const fetchRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     const rustupInstaller = process.platform === 'win32'
-        ? yield tool_cache_1.default.downloadTool('https://win.rustup.rs')
-        : yield tool_cache_1.default.downloadTool('https://sh.rustup.rs');
+        ? yield (0, tool_cache_1.downloadTool)('https://win.rustup.rs')
+        : yield (0, tool_cache_1.downloadTool)('https://sh.rustup.rs');
     yield fs_1.promises.chmod(rustupInstaller, 0o755);
     yield (0, exec_1.exec)(rustupInstaller, ['--default-toolchain', 'none', '-y']);
     yield (0, exec_1.exec)('rustup show');
