@@ -1,11 +1,20 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: '@brndnmtthws/rust-action-rustup'
+description: 'Rustup install action'
+author: 'Brenden Matthews <github@brenden.brndn.io>'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  channel:
+    default: stable
+    description: The Rust toolchain to install (i.e., stable, nightly, beta)
+  components:
+    description: List of individual components to install after installing
+      rustup, can be a whitespace or comma separated list
+  profile:
+    description: Override the default rustup profile
+  allow-downgrade:
+    description: Allow rustup to downgrade the installation until all
+      components are available
+    default: 'true'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
