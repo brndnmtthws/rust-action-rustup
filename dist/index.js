@@ -19,7 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __importDefault(__nccwpck_require__(2186));
+const core_1 = __nccwpck_require__(2186);
 const exec_1 = __nccwpck_require__(1514);
 const tool_cache_1 = __importDefault(__nccwpck_require__(7784));
 const fs_1 = __nccwpck_require__(7147);
@@ -33,7 +33,7 @@ const fetchRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, exec_1.exec)('rustup show');
     yield (0, exec_1.exec)('cargo --version');
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    core_1.default.addPath(path_1.default.join(process.env.HOME, '.cargo', 'bin'));
+    (0, core_1.addPath)(path_1.default.join(process.env.HOME, '.cargo', 'bin'));
 });
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -42,7 +42,7 @@ function run() {
         }
         catch (error) {
             if (error instanceof Error)
-                core_1.default.setFailed(error.message);
+                (0, core_1.setFailed)(error.message);
         }
     });
 }
