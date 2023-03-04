@@ -1,36 +1,11 @@
 {
-  "name": "@brndnmtthws/rust-action-rustup",
-  "version": "1.0.0",
-  "private": true,
-  "description": "GitHub action for installing rustup",
-  "main": "lib/main.js",
-  "scripts": {
-    "build": "tsc",
-    "format": "prettier --write '**/*.{ts,js,cjs,json,md,yaml,yml}'",
-    "format-check": "prettier --check '**/*.{ts,js,cjs,json,md,yaml,yml}'",
-    "lint": "eslint src/**/*.ts tests/**/*.ts *.cjs",
-    "package": "ncc build --source-map --license licenses.txt",
-    "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brndnmtthws/rust-action-rustup.git"
-  },
-  "keywords": [
-    "actions",
-    "rust",
-    "rustup",
-    "cargo"
-  ],
   "author": "Brenden Matthews <github@brenden.brndn.io>",
-  "license": "AGPL-3.0",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/tool-cache": "^2.0.1"
   },
+  "description": "GitHub action for installing rustup",
   "devDependencies": {
     "@types/eslint": "^8.21.1",
     "@types/jest": "^29.4.0",
@@ -53,5 +28,30 @@
     "prettier": "2.8.4",
     "ts-jest": "^29.0.5",
     "typescript": "^4.9.5"
-  }
+  },
+  "keywords": [
+    "actions",
+    "rust",
+    "rustup",
+    "cargo"
+  ],
+  "license": "AGPL-3.0",
+  "main": "lib/main.js",
+  "name": "@brndnmtthws/rust-action-rustup",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brndnmtthws/rust-action-rustup.git"
+  },
+  "scripts": {
+    "act:test": "npm run build && act -j test",
+    "all": "npm run format && npm run lint && npm run test && npm run build",
+    "build": "tsc && ncc build --source-map --license licenses.txt",
+    "format": "prettier --write '**/*.{ts,js,cjs,json,md,yaml,yml}'",
+    "format-check": "prettier --check '**/*.{ts,js,cjs,json,md,yaml,yml}'",
+    "lint": "eslint src/**/*.ts tests/**/*.ts *.cjs",
+    "prepare": "husky install",
+    "test": "jest"
+  },
+  "version": "1.0.0"
 }

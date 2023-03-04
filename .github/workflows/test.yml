@@ -19,5 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        env:
+          ACTIONS_RUNNER_DEBUG: true
         with:
           channel: nightly
