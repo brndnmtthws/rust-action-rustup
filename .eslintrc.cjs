@@ -1,15 +1,23 @@
 module.exports = {
-  plugins: ['@typescript-eslint', 'simple-import-sort', 'prettier'],
+  plugins: ['@typescript-eslint', 'simple-import-sort', 'import', 'prettier'],
   extends: [
     'eslint:recommended',
     'plugin:github/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 9,
     sourceType: 'module'
+  },
+  settings: {
+    'import/resolver': {
+      node: true,
+      typescript: true
+    }
   },
   rules: { 'i18n-text/no-en': 'off', semi: 'off' },
   env: {

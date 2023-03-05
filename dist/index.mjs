@@ -6815,7 +6815,6 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
 const rustupExists = () => __awaiter(void 0, void 0, void 0, function* () {
-    (0,core.startGroup)('Checking for rustup');
     try {
         yield (0,exec.exec)('rustup', ['show']);
         return true;
@@ -6825,13 +6824,9 @@ const rustupExists = () => __awaiter(void 0, void 0, void 0, function* () {
             (0,core.debug)(error.message);
         return false;
     }
-    finally {
-        (0,core.endGroup)();
-    }
 });
 const fetchRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    (0,core.startGroup)('Install rustup');
     const rustupInstaller = process.platform === 'win32'
         ? yield (0,tool_cache.downloadTool)('https://win.rustup.rs')
         : yield (0,tool_cache.downloadTool)('https://sh.rustup.rs');
@@ -6839,15 +6834,11 @@ const fetchRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0,exec.exec)(rustupInstaller, ['--default-toolchain', 'none', '-y']);
     (0,core.addPath)(external_path_.join((_a = process.env.HOME) !== null && _a !== void 0 ? _a : process.cwd(), '.cargo', 'bin'));
     yield (0,exec.exec)('rustup', ['show']);
-    (0,core.endGroup)();
 });
 const selfUpdateRustup = () => __awaiter(void 0, void 0, void 0, function* () {
-    (0,core.startGroup)('Updating rustup');
     yield (0,exec.exec)('rustup', ['self', 'update']);
-    (0,core.endGroup)();
 });
 const installToolchain = () => __awaiter(void 0, void 0, void 0, function* () {
-    (0,core.startGroup)('Installing toolchain');
     const toolchain = (0,core.getInput)('toolchain');
     const allowDowngrade = yn((0,core.getInput)('allow-downgrade'));
     const profile = (0,core.getInput)('profile');
@@ -6865,10 +6856,8 @@ const installToolchain = () => __awaiter(void 0, void 0, void 0, function* () {
         ...components
     ]);
     yield (0,exec.exec)('rustup', ['default', toolchain]);
-    (0,core.endGroup)();
 });
 const installAdditionalTargets = (additionalTargets) => __awaiter(void 0, void 0, void 0, function* () {
-    (0,core.startGroup)('Installing additional targets');
     const targets = additionalTargets
         .split(/(,|\s)+/)
         .map((t) => t.trim())
@@ -6876,27 +6865,26 @@ const installAdditionalTargets = (additionalTargets) => __awaiter(void 0, void 0
     for (const target of targets) {
         yield (0,exec.exec)('rustup', ['target', 'add', target]);
     }
-    (0,core.endGroup)();
 });
 function run() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (!(yield rustupExists())) {
+            if (!(yield (0,core.group)('Checking for rustup', () => rustupExists()))) {
                 (0,core.info)('Need to install rustup');
-                yield fetchRustup();
+                yield (0,core.group)('Installing rustup', () => fetchRustup());
             }
             else {
                 (0,core.info)('Rustup is already installed, nice 😎');
             }
             const selfUpdate = (_a = yn((0,core.getInput)('self-update'))) !== null && _a !== void 0 ? _a : false;
             if (selfUpdate) {
-                yield selfUpdateRustup();
+                yield (0,core.group)('Updating rustup', () => selfUpdateRustup());
             }
-            yield installToolchain();
+            yield (0,core.group)('Installing toolchain', () => installToolchain());
             const additionalTargets = (0,core.getInput)('targets');
             if (additionalTargets && additionalTargets.length > 0) {
-                yield installAdditionalTargets(additionalTargets);
+                yield (0,core.group)('Installing additional targets', () => installAdditionalTargets(additionalTargets));
             }
         }
         catch (error) {
