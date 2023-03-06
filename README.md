@@ -21,6 +21,13 @@ action](https://github.com/brndnmtthws/rust-action) for all your Rust CI needs.
 | `targets`         | Install additional targets for cross compilation (i.e., 'x86_64-apple-ios, armv7-unknown-linux-musleabi'). Can be a whitespace or comma separate list of targets. Run `rustup target list` to list all targets. | n/a      | `aarch64-fuchsia` |
 | `self-update`     | Make sure rustup itself is up-to-date before using it. This may fail on some platforms, so it's disabled by default.                                                                                            | `false`  | `true`            |
 
+## Outputs
+
+| Output          | Description                                            |
+| --------------- | ------------------------------------------------------ |
+| `toolchain`     | The Rust toolchain that which was installed.           |
+| `rustc-version` | The installed rustc version for the current toolchain. |
+
 ## Recipes
 
 ### Install with defaults
