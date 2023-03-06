@@ -1,4 +1,12 @@
-import { debug, addPath, setFailed, info, getInput, group } from '@actions/core'
+import {
+  debug,
+  addPath,
+  setFailed,
+  info,
+  getInput,
+  group,
+  setOutput
+} from '@actions/core'
 import { exec } from '@actions/exec'
 import { downloadTool } from '@actions/tool-cache'
 import { promises as fs } from 'fs'
@@ -25,8 +33,6 @@ const fetchRustup = async () => {
   await exec(rustupInstaller, ['--default-toolchain', 'none', '-y'])
 
   addPath(path.join(process.env.HOME ?? process.cwd(), '.cargo', 'bin'))
-
-  await exec('rustup', ['show'])
 }
 
 const selfUpdateRustup = async () => {
@@ -54,6 +60,27 @@ const installToolchain = async () => {
   await exec('rustup', ['default', toolchain])
 }
 
+const showToolchain = async () => {
+  let stdout: string[] = []
+  await exec('rustup', ['show'], {
+    listeners: {
+      stdout: (data: Buffer) => {
+        stdout = stdout.concat(data.toString().split(/[\r\n]+/))
+      }
+    }
+  })
+  stdout.forEach((line) => {
+    const defaultToolchain = line.match(/(\S+) \(default\)/)
+    if (defaultToolchain) {
+      setOutput('toolchain', defaultToolchain[1])
+    }
+    const rustcVersion = line.match(/rustc ([\S]+) /)
+    if (rustcVersion) {
+      setOutput('rustc-version', rustcVersion[1])
+    }
+  })
+}
+
 const installAdditionalTargets = async (additionalTargets: string) => {
   const targets = additionalTargets
     .split(/(,|\s)+/)
@@ -78,6 +105,7 @@ async function run(): Promise<void> {
       await group('Updating rustup', () => selfUpdateRustup())
     }
     await group('Installing toolchain', () => installToolchain())
+    await showToolchain()
     const additionalTargets = getInput('targets')
     if (additionalTargets && additionalTargets.length > 0) {
       await group('Installing additional targets', () =>

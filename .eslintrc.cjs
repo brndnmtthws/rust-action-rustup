@@ -2,7 +2,6 @@ module.exports = {
   plugins: ['@typescript-eslint', 'simple-import-sort', 'import', 'prettier'],
   extends: [
     'eslint:recommended',
-    'plugin:github/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
