@@ -6833,7 +6833,6 @@ const fetchRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     yield external_fs_.promises.chmod(rustupInstaller, 0o755);
     yield (0,exec.exec)(rustupInstaller, ['--default-toolchain', 'none', '-y']);
     (0,core.addPath)(external_path_.join((_a = process.env.HOME) !== null && _a !== void 0 ? _a : process.cwd(), '.cargo', 'bin'));
-    yield (0,exec.exec)('rustup', ['show']);
 });
 const selfUpdateRustup = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0,exec.exec)('rustup', ['self', 'update']);
@@ -6856,6 +6855,26 @@ const installToolchain = () => __awaiter(void 0, void 0, void 0, function* () {
         ...components
     ]);
     yield (0,exec.exec)('rustup', ['default', toolchain]);
+});
+const showToolchain = () => __awaiter(void 0, void 0, void 0, function* () {
+    let stdout = [];
+    yield (0,exec.exec)('rustup', ['show'], {
+        listeners: {
+            stdout: (data) => {
+                stdout = stdout.concat(data.toString().split(/[\r\n]+/));
+            }
+        }
+    });
+    stdout.forEach((line) => {
+        const defaultToolchain = line.match(/(\S+) \(default\)/);
+        if (defaultToolchain) {
+            (0,core.setOutput)('toolchain', defaultToolchain[1]);
+        }
+        const rustcVersion = line.match(/rustc ([\S]+) /);
+        if (rustcVersion) {
+            (0,core.setOutput)('rustc-version', rustcVersion[1]);
+        }
+    });
 });
 const installAdditionalTargets = (additionalTargets) => __awaiter(void 0, void 0, void 0, function* () {
     const targets = additionalTargets
@@ -6882,6 +6901,7 @@ function run() {
                 yield (0,core.group)('Updating rustup', () => selfUpdateRustup());
             }
             yield (0,core.group)('Installing toolchain', () => installToolchain());
+            yield showToolchain();
             const additionalTargets = (0,core.getInput)('targets');
             if (additionalTargets && additionalTargets.length > 0) {
                 yield (0,core.group)('Installing additional targets', () => installAdditionalTargets(additionalTargets));

@@ -35,6 +35,12 @@ inputs:
       some platforms, so it's disabled by default.
     default: 'false'
 
+outputs:
+  toolchain:
+    description: The Rust toolchain that which was installed.
+  rustc-version:
+    description: The installed rustc version for the current toolchain.
+
 runs:
   using: 'node16'
   main: 'dist/index.mjs'
