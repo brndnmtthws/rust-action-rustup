@@ -9,7 +9,7 @@
   "description": "GitHub action for installing rustup",
   "devDependencies": {
     "@types/eslint": "^8.37.0",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "@types/prettier": "2.7.2",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
