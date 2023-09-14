@@ -9,7 +9,6 @@
   "description": "GitHub action for installing rustup",
   "devDependencies": {
     "@tsconfig/node-lts": "^18.12.5",
-    "@tsconfig/recommended": "^1.0.2",
     "@types/eslint": "^8.44.2",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.5.1",
