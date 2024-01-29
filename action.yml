@@ -42,5 +42,5 @@ outputs:
     description: The installed rustc version for the current toolchain.
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.mjs'
