@@ -6933,8 +6933,8 @@ const installAdditionalTargets = (additionalTargets) => __awaiter(void 0, void 0
     }
 });
 function run() {
-    var _a;
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         try {
             if (!(yield (0,core.group)('Checking for rustup', () => rustupExists()))) {
                 (0,core.info)('Need to install rustup');
