@@ -1,3 +1,5 @@
 dist/
 lib/
 node_modules/
+eslint.config.mjs
+jest.config.js

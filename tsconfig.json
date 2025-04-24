@@ -10,6 +10,6 @@
     "module": "nodenext",
     "moduleResolution": "nodenext"
   },
-  "include": ["src/**/*.ts", "src/main.mts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/main.mts", "src/tests/**/*.ts"],
+  "exclude": ["node_modules", "eslint.config.mjs", "jest.config.cjs"]
 }
